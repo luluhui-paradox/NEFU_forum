@@ -29,7 +29,7 @@ function checkStatus (response) {
   if (response.status===401){
     this.$store.dispatch("logout")
   }
-  
+  //
   // 异常状态下，把错误信息返回去
   return {
     status: -404,
