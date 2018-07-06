@@ -63,39 +63,28 @@ export default {
         password: this.password
       };
       //const localUser = this.$store.state.user
-      //这里放ajax异步请求
-      // this.ajax({
-      //    //发给后端的网址
-      //    url:'/',
-      //    type:'post',
-      //    data:user,
-      //    success:function (result) {
-      //      if(result.isSuccess===true){
-      //        ss.setItem(access_token,result.token);
-      //        this.$store.dispatch("login");
-      //      }else{
-      //        this.showMsg(result.reason);
-      //      }
-      //    },
-      //    error:function (error) {
-      //        this.showMsg(error.reason);
-      //    },dataType:'json'
-      // })
-
+      //这里放axios异步请求
+      var sucs;
+      var result;
       this.$axios.post('/',user)
         .then(function (response) {
           if (response.result.isSusses===true){
-             sessionStorage.setItem("access_token",response.result.access_token);
-             this.$store.dispatch("login");
+             sucs=true;result=response;
           } else{
-            this.showMsg(response.result.reason);
+              sucs=false;
           }
         })
         .catch(function (error) {
-            this.showMsg(error)
-        })
+              sucs=false;
+        });
 
+      if (sucs){
+        sessionStorage.setItem("access_token",result.result.access_token);
+        this.$store.dispatch("login");
+      } else
+        this.showMsg("用户名或密码不对");
     },
+
     showMsg(msg, type = 'warning') {
       this.msg = msg
       this.msgType = type

@@ -7,7 +7,7 @@ axios.interceptors.request.use(config => {    // 这里的config包含每次请�
   // 判断localStorage中是否存在api_token
   if (sessionStorage.getItem('access_token')) {
     //  存在将api_token写入 request header
-    config.headers.apiToken = `${sessionStorage.getItem('access_token')}`;
+    config.headers.access_token= `${sessionStorage.getItem('access_token')}`;
   }
   return config;
 }, err => {
