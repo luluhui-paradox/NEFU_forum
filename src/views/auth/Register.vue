@@ -104,7 +104,7 @@ export default {
           suce=false;
         });
 
-        
+
         if (suce){this.$store.dispatch("login")}
         else {this.showMsg("注册失败");}
       }
