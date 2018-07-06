@@ -89,19 +89,24 @@ export default {
           avatar: `https://api.adorable.io/avatars/200/${this.username}.png`
         }
         //向服务器返回数据
-        const localUser = this.$store.state.user
+        var suce;
+        var result;
 
         this.$axios.post("/",user)
           .then(function (response) {
              if (response.data.isSuccess===true){
+                 suce=true;result=response;
                  sessionStorage.setItem("access_token",response.data.access_token);
-                 this.login(user);
+                 sessionStorage.setItem("user",user);
              }
-             else this.showMsg('注册失败')
-          })
-          .error(function (error) {
-               this.showMsg(error);
-          })
+             else suce=false;
+          }).catch(function (error) {
+          suce=false;
+        });
+
+        
+        if (suce){this.$store.dispatch("login")}
+        else {this.showMsg("注册失败");}
       }
     },
     //注册成功，跳转至登录页面
