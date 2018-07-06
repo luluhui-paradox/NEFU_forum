@@ -13,12 +13,20 @@
             <input v-model.trim="username" v-validator:input.required="{ regex: /^[a-zA-Z]+\w*\s?\w*$/, error: '用户名要求以字母开头的单词字符' }" type="text" class="form-control" placeholder="请填写用户名">
           </div>
           <div class="form-group">
+            <label class="control-label">昵称</label>
+            <input v-model.trim="nickName" v-validator:input.required="{ error: '用户名不能为空' }" maxlength="10" minlength="3" type="text" class="form-control" placeholder="请填写用户名">
+          </div>
+          <div class="form-group">
             <label class="control-label">密码</label>
             <input id="password" v-model.trim="password" v-validator.required="{ regex: /^\w{6,16}$/, error: '密码要求 6 ~ 16 个单词字符' }" type="password" class="form-control" placeholder="请填写密码">
           </div>
           <div class="form-group">
             <label class="control-label">确认密码</label>
             <input v-model.trim="cpassword" v-validator.required="{ target: '#password' }" type="password" class="form-control" placeholder="请填写确认密码">
+          </div>
+          <div class="form-group">
+            <label class="control-label">邮箱</label>
+            <input v-model.trim="email" v-validator.required="{error:'请输入邮箱'}" type="email" class="form-control" placeholder="请填写邮箱"/>
           </div>
           <div class="form-group">
             <label class="control-label">图片验证码</label>
@@ -47,8 +55,10 @@ export default {
     return {
       captchaTpl: '', // 验证码模板
       username: '', // 用户名
+      nickName:'',//昵称
       password: '', // 密码
       cpassword: '', // 确认密码
+      email:'',//邮箱
       captcha: '', // 验证码
       msg: '', // 消息
       msgType: '', // 消息类型
@@ -84,10 +94,12 @@ export default {
         this.getCaptcha()
       } else {
         const user = {
-          name: this.username,
+          nickName:this.nickName,
+          account: this.username,
           password: this.password,
-          avatar: `https://api.adorable.io/avatars/200/${this.username}.png`
-        }
+          //avatar: `https://api.adorable.io/avatars/200/${this.username}.png`,
+          email:this.email
+        };
         //向服务器返回数据
         var suce;
         var result;
@@ -105,19 +117,19 @@ export default {
         });
 
 
-        if (suce){this.$store.dispatch("login")}
+        if (suce){this.login(user)}
         else {this.showMsg("注册失败");}
       }
     },
     //注册成功，跳转至登录页面
     login(user) {
-      this.$store.dispatch('login', user)
-      this.showMsg('注册成功', 'success')
+      this.$store.dispatch('login', user);
+      this.showMsg('注册成功', 'success');
     },
     showMsg(msg, type = 'warning') {
-      this.msg = msg
-      this.msgType = type
-      this.msgShow = false
+      this.msg = msg;
+      this.msgType = type;
+      this.msgShow = false;
 
       this.$nextTick(() => {
         this.msgShow = true

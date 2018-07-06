@@ -7,11 +7,12 @@
       <div class="col-md-3 main-col pull-left">
         <div class="panel panel-default corner-radius">
           <div class="panel-body text-center topic-author-box blog-info">
-            <div class="image blog-cover">
-              <router-link :to="`/${userName}`">
-                <img :src="userAvatar" class="avatar-112 avatar img-thumbnail">
-              </router-link>
-            </div>
+            <!--<div class="image blog-cover">-->
+              <!--&lt;!&ndash;头像&ndash;&gt;-->
+              <!--<router-link :to="`/${userName}`">-->
+                <!--<img :src="https://api.adorable.io/avatars/200/${this.username}.png" class="avatar-112 avatar img-thumbnail">-->
+              <!--</router-link>-->
+            <!--</div>-->
             <div class="blog-name">
               <h4>
                 <router-link :to="`/${userName}`">{{ userName }} 的专栏</router-link>
@@ -19,7 +20,7 @@
             </div>
             <hr>
             <router-link :to="`/${userName}`">
-              <li class="list-group-item"><i class="text-md fa fa-list-ul"></i> 专栏文章（{{ articleNum }}）</li>
+              <li class="list-group-item"><i class="text-md fa fa-list-ul"></i> 专栏文章 </li>
             </router-link>
           </div>
         </div>

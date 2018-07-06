@@ -59,7 +59,7 @@ export default {
     },
     submit() {
       const user = {
-        name: this.username,
+        account: this.username,
         password: this.password
       };
       //const localUser = this.$store.state.user
@@ -80,7 +80,7 @@ export default {
 
       if (sucs){
         sessionStorage.setItem("access_token",result.result.access_token);
-        this.$store.dispatch("login");
+        this.$store.dispatch("login",user);
       } else
         this.showMsg("用户名或密码不对");
     },

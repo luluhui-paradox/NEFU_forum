@@ -41,13 +41,7 @@
       </li>
     </ul>
     <div v-else class="nav navbar-nav github-login">
-      <!--<router-link to="/auth/login" class="btn btn-default login-btn "  >-->
-        <!--<i class="fa fa-user"></i> 登 录-->
-      <!--</router-link>-->
       <el-button title="登 录"  v-on:click="signin" size="small" style="margin-top: 7px;">登 录</el-button>
-      <!--<router-link to="/auth/register" class="btn btn-default login-btn">-->
-        <!--<i class="fa fa-user-plus"></i> 注 册-->
-      <!--</router-link>-->
       <el-button title="注 册" v-on:click="registe" size="small" type="primary">注 册</el-button>
     </div>
   </div>

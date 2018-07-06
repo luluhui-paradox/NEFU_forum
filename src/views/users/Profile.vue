@@ -6,48 +6,18 @@
         <hr>
         <div class="form-horizontal" data-validator-form>
           <div class="form-group">
-            <label class="col-sm-2 control-label">用户名</label>
+            <label class="col-sm-2 control-label">昵称</label>
             <div class="col-sm-6">
-              <input v-model.trim="username" v-validator:input.required="{ title: '用户名', regex: /^[a-zA-Z]+\w*\s?\w*$/, error: '用户名要求以字母开头的单词字符' }" type="text" class="form-control">
+              <input v-model.trim="nickName" v-validator:input.required="{ title: '昵称', error: '昵称不能为空' }" minlength="3" maxlength="16" type="text" class="form-control">
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label">性别</label>
+           <!--修改邮箱-->
+            <label class="col-sm-2 control-label">昵称</label>
             <div class="col-sm-6">
-              <select v-model="sex" class="form-control">
-                <option value="">未选择</option>
-                <option value="male">男</option>
-                <option value="female">女</option>
-              </select>
+              <input v-model.trim="email" v-validator:input.required="{ title: '邮箱', error: '昵称不能为空' }"  type="email" class="form-control">
             </div>
           </div>
-          <div class="form-group">
-            <label class="col-sm-2 control-label">兴趣</label>
-            <div class="col-sm-6">
-              <label class="checkbox-inline">
-                <input v-model="hobbies" value="泡网" type="checkbox"> 泡网
-              </label>
-              <label class="checkbox-inline">
-                <input v-model="hobbies" value="运动" type="checkbox"> 运动
-              </label>
-              <label class="checkbox-inline">
-                <input v-model="hobbies" value="健身" type="checkbox"> 健身
-              </label>
-              <label class="checkbox-inline">
-                <input v-model="hobbies" value="旅游" type="checkbox"> 旅游
-              </label>
-              <label class="checkbox-inline">
-                <input v-model="hobbies" value="游戏" type="checkbox"> 游戏
-              </label>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-2 control-label">个人简介</label>
-            <div class="col-sm-6">
-              <textarea v-model.trim="introduction" type="text" class="form-control"></textarea>
-            </div>
-          </div>
-
           <div class="form-group">
             <div class="col-sm-offset-2 col-sm-6">
               <button type="submit" class="btn btn-primary" @click="updateProfile">应用修改</button>
@@ -60,39 +30,51 @@
 </template>
 
 <script>
+import sessionStorage from "../../utils/sessionStorage";
+
 export default {
   name: 'EditProfile',
   data() {
     return {
-      username: '', // 用户名
-      sex: '', // 性别
-      hobbies: [], // 兴趣
-      introduction: '' // 个人简介
+      nickName:this.$store.state.user.nickName,//昵称
+      email:this.$store.state.user.email//邮箱
     }
   },
   created() {
-    const user = this.$store.state.user
 
-    if (user && typeof user === 'object') {
-      const { name, sex, hobbies, introduction } = user
+    var user=this.$store.state.user;
+    var result;
+    this.$axios.post("/queryUrl",user)
+      .then(function (response) {
+         if (response.status===200){this.user=response.data.user;result=true}
+         else{result=false}
+      })
+      .catch(function (error) {
+           result=false;
+      })
+     if(result) {this.$store.state.user=user;sessionStorage.setItem("user",user)}
 
-      this.username = name
-      this.sex = sex || this.sex
-      this.hobbies = hobbies || this.hobbies
-      this.introduction = introduction
-    }
   },
   methods: {
     updateProfile(e) {
       this.$nextTick(() => {
         if (e.target.canSubmit) {
-          this.$store.dispatch('updateUser', {
-            name: this.username,
-            sex: this.sex,
-            hobbies: this.hobbies,
-            introduction: this.introduction
-          })
-           this.$message.show('修改成功')
+            const user={
+               id:this.$store.state.user.id,
+               nickName:this.nickName,
+               email:this.email
+            };
+            var success;
+            this.$axios.post("/queryUrl",user)
+              .then(function (response) {
+                  if(response.status===200)
+                     success=true;
+              })
+              .catch(function (error) {
+                   success=false;
+              })
+          if (success) this.showMsg("修改成功");
+          else this.showMsg("修改失败");
         }
       })
     }
