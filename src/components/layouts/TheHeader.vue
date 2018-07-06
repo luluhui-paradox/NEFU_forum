@@ -21,7 +21,6 @@
           </li>
         </ul>
         <div class="navbar-right">
-          <SearchInput/>
           <TheEntry/>
         </div>
       </div>
