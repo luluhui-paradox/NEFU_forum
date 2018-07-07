@@ -58,14 +58,14 @@ export default {
       })
     },
     submit() {
-      const user = {
+      var user = {
         account: this.username,
         password: this.password
       };
       //const localUser = this.$store.state.user
       //这里放axios异步请求
-      var sucs;
-      var result;
+      var sucs;//成功标识
+      var result;//存放回传结果
       this.$axios.post('/',user)
         .then(function (response) {
           if (response.result.isSusses===true){
@@ -79,7 +79,11 @@ export default {
         });
 
       if (sucs){
+        //session中存放access_token
         sessionStorage.setItem("access_token",result.result.access_token);
+        //将服务器回传的user信息放入store中
+        user=response.data.user;
+        //登录操作
         this.$store.dispatch("login",user);
       } else
         this.showMsg("用户名或密码不对");

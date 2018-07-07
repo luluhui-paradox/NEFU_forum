@@ -93,7 +93,7 @@ export default {
         this.showMsg('验证码不正确')
         this.getCaptcha()
       } else {
-        const user = {
+        var user = {
           nickName:this.nickName,
           account: this.username,
           password: this.password,
@@ -108,8 +108,8 @@ export default {
           .then(function (response) {
              if (response.data.isSuccess===true){
                  suce=true;result=response;
-                 sessionStorage.setItem("access_token",response.data.access_token);
-                 sessionStorage.setItem("user",user);
+
+
              }
              else suce=false;
           }).catch(function (error) {
@@ -117,7 +117,10 @@ export default {
         });
 
 
-        if (suce){this.login(user)}
+        if (suce){
+          sessionStorage.setItem("access_token",result.data.access_token);
+          this.login(result.data.user);
+        }
         else {this.showMsg("注册失败");}
       }
     },
