@@ -11,6 +11,7 @@
 <script>
 import TheHeader from '@/components/layouts/TheHeader'
 import TheFooter from '@/components/layouts/TheFooter'
+import crypto from 'crypto'
 
 export default {
   name: 'App',
@@ -39,7 +40,7 @@ $fa-font-path: "~font-awesome/fonts/";
 @import "~font-awesome/scss/font-awesome";
 @import "./styles/main";
 @import "./styles/extra";
-@import 'simplemde/dist/simplemde.min.css';
-@import 'highlight.js/styles/paraiso-dark.css';
-@import "animate.css/animate.min.css";
+/*@import 'simplemde/dist/simplemde.min.css';*/
+/*@import 'highlight.js/styles/paraiso-dark.css';*/
+/*@import "animate.css/animate.min.css";*/
 </style>

@@ -96,7 +96,7 @@ export default {
         var user = {
           nickName:this.nickName,
           account: this.username,
-          password: this.password,
+          password:this.crypto.createHash("md5").update(this.password),
           //avatar: `https://api.adorable.io/avatars/200/${this.username}.png`,
           email:this.email
         };
@@ -106,7 +106,7 @@ export default {
 
         this.$axios.post("/",user)
           .then(function (response) {
-             if (response.data.isSuccess===true){
+             if (response.data.success===true){
                  suce=true;result=response;
 
 

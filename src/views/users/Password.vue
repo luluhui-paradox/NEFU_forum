@@ -46,13 +46,13 @@ export default {
       this.$nextTick(() => {
         if (e.target.canSubmit) {
                     var stateUser=this.$store.state.user;
-                    var changeUser={password:this.cpassword};
+                    var changeUser={password:this.crypto.createHash('md5').update(this.password)};
                     var suces;
                     changeUser={...stateUser,...changeUser};
                     //异步方法
                     this.$axios.post("/url",changeUser)
                     .then(function (response) {
-                    if(response.data.isSuccess===true){
+                    if(response.data.success===true){
                        suces=true;
                     }
                     else suces=false;

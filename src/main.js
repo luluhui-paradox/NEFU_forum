@@ -11,6 +11,7 @@ import store from './store'
 import VueSweetalert2 from './plugins/vue-sweetalert2'
 import Message from './plugins/message'
 import './filters'
+
 import { mockArticles } from './mock/data'
 import ls from './utils/localStorage.js'
 import ss from './utils/sessionStorage.js'

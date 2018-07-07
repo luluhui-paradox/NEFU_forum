@@ -12,7 +12,7 @@ const state = {
   user: ss.getItem('user'),
   auth: ss.getItem('auth'),
   articles: ls.getItem('articles'),
-  access_token:ss.getItem('access_token'),
+  token:ss.getItem('token'),
   searchValue: '',
   origin: location.origin
   // github pages

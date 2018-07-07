@@ -46,7 +46,7 @@ export default {
   beforeRouteEnter(to, from, next) {
     next(vm => {
       // 确认渲染该组件的对应路由时，获取对应用户文章
-      //vm.articles = vm.$store.getters.getArticlesByUid(null, to.params.user)
+      vm.articles = vm.$store.getters.getArticlesByUid(null, to.params.user)
     })
   }
 }

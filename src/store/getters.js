@@ -61,25 +61,25 @@ export const computedArticles = (state) => {
 }
 export const getArticlesByUid = (state, getters) => (uid, user) => {
   // 使用派生状态 computedArticles 作为所有文章
-  let articles = getters.computedArticles
-
-  if (Array.isArray(articles)) {
-    if (user) {
-      // 有用户名时遍历所有文章
-      for (const article of articles) {
-        if (article.uname === user) {
-          // 指定 uid 为文章上的 uid
-          uid = article.uid
-          break
-        }
-      }
-    }
-
-    // 使用指定 uid 过滤所有文章
-    articles = articles.filter(article => parseInt(uid) === parseInt(article.uid))
-  } else {
-    articles = []
-  }
+  // let articles = getters.computedArticles;
+  //
+  // if (Array.isArray(articles)) {
+  //   if (user) {
+  //     // 有用户名时遍历所有文章
+  //     for (const article of articles) {
+  //       if (article.uname === user) {
+  //         // 指定 uid 为文章上的 uid
+  //         uid = article.uid
+  //         break
+  //       }
+  //     }
+  //   }
+  //
+  //   // 使用指定 uid 过滤所有文章
+  // //   articles = articles.filter(article => parseInt(uid) === parseInt(article.uid))
+  // // } else {
+  // //   articles = []
+  // // }
 
   return articles
 }

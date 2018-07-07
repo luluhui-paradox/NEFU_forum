@@ -60,7 +60,8 @@ export default {
     submit() {
       var user = {
         account: this.username,
-        password: this.password
+        //对密码进行md5加密
+        password: this.crypto.createHash("md5").update(this.password)
       };
       //const localUser = this.$store.state.user
       //这里放axios异步请求
@@ -68,8 +69,8 @@ export default {
       var result;//存放回传结果
       this.$axios.post('/',user)
         .then(function (response) {
-          if (response.result.isSusses===true){
-             sucs=true;result=response;
+          if (response.result.success===true){
+             sucs=true;
           } else{
               sucs=false;
           }
@@ -80,11 +81,12 @@ export default {
 
       if (sucs){
         //session中存放access_token
-        sessionStorage.setItem("access_token",result.result.access_token);
-        //将服务器回传的user信息放入store中
-        user=response.data.user;
+        sessionStorage.setItem("token",result.data.token);
+        this.$axios.post("/url",{accout:user.account,password:user.password})
+          .then(function (response) {
+            this.$store.dispatch("login",response.data);
+          })
         //登录操作
-        this.$store.dispatch("login",user);
       } else
         this.showMsg("用户名或密码不对");
     },

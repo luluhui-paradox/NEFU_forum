@@ -17,6 +17,7 @@
     "animate.css": "^3.6.1",
     "axios": "^0.18.0",
     "bootstrap-sass": "^3.3.7",
+    "crypto": "^1.0.1",
     "element-ui": "^2.4.3",
     "font-awesome": "^4.7.0",
     "highlight.js": "^9.12.0",
