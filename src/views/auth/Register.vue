@@ -124,7 +124,7 @@ export default {
         else {this.showMsg("注册失败");}
       }
     },
-    //注册成功，跳转至登录页面
+    //注册成功，直接登录
     login(user) {
       this.$store.dispatch('login', user);
       this.showMsg('注册成功', 'success');

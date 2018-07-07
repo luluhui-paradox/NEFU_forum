@@ -59,21 +59,26 @@ export default {
     updateProfile(e) {
       this.$nextTick(() => {
         if (e.target.canSubmit) {
-            const user={
-               id:this.$store.state.user.id,
-               nickName:this.nickName,
-               email:this.email
+            var stageUser=this.$store.state.user;
+            var changeUser={
+              nickName:this.nickName,
+              email:this.email
             };
+            changeUser={...stageUser,...changeUser};
+
             var success;
-            this.$axios.post("/queryUrl",user)
+            this.$axios.post("/queryUrl",changeUser)
               .then(function (response) {
                   if(response.status===200)
-                     success=true;
+                     success=true;result=response;
               })
               .catch(function (error) {
                    success=false;
               })
-          if (success) this.showMsg("修改成功");
+          if (success) {
+            this.$store.dispatch('updateUser',changeUser);
+            this.showMsg("修改成功");
+          }
           else this.showMsg("修改失败");
         }
       })

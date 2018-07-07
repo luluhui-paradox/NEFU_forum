@@ -39,18 +39,31 @@ export default {
     }
   },
   created() {
-    const user = this.$store.state.user
 
-    if (user && typeof user === 'object') {
-      this.password = user.password
-    }
   },
   methods: {
     updatePassword(e) {
       this.$nextTick(() => {
         if (e.target.canSubmit) {
-          this.$store.dispatch('updateUser', { password: this.cpassword })
-          this.$message.show('修改成功')
+                    var stateUser=this.$store.state.user;
+                    var changeUser={password:this.cpassword};
+                    var suces;
+                    changeUser={...stateUser,...changeUser};
+                    //异步方法
+                    this.$axios.post("/url",changeUser)
+                    .then(function (response) {
+                    if(response.data.isSuccess===true){
+                       suces=true;
+                    }
+                    else suces=false;
+             })
+                    .catch(function (error) {
+                   suces=false
+             });
+                    if (suces){
+              this.$store.dispatch('updateUser',changeUser);
+              this.$message.show('修改成功');
+           }else this.$message.show('修改失败');
         }
       })
     }
