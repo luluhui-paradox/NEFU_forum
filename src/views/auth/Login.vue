@@ -32,6 +32,8 @@
 import {post} from "../../store/actions";
 import localStorage from "../../utils/localStorage";
 import sessionStorage from "../../utils/sessionStorage";
+import md5 from 'md5'
+
 
 
 export default {
@@ -61,13 +63,14 @@ export default {
       var user = {
         account: this.username,
         //对密码进行md5加密
-        password: this.crypto.createHash("md5").update(this.password)
-      };
+        password:md5(this.password)
+      }
+      console.log(user);
       //const localUser = this.$store.state.user
       //这里放axios异步请求
       var sucs;//成功标识
       var result;//存放回传结果
-      this.$axios.post('/',user)
+      this.$axios.post('http://10.42.0.118:8080/authorize',user)
         .then(function (response) {
           if (response.result.success===true){
              sucs=true;

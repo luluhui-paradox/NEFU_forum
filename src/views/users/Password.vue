@@ -50,7 +50,7 @@ export default {
                     var suces;
                     changeUser={...stateUser,...changeUser};
                     //异步方法
-                    this.$axios.post("/url",changeUser)
+                    this.$axios.post("10.42.0.118:8080/user",changeUser)
                     .then(function (response) {
                     if(response.data.success===true){
                        suces=true;

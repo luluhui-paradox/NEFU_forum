@@ -48,6 +48,7 @@
 import createCaptcha from '@/utils/createCaptcha'
 import ls from '@/utils/localStorage'
 import sessionStorage from "../../utils/sessionStorage";
+import md5 from 'md5'
 
 export default {
   name: 'Register',
@@ -96,7 +97,7 @@ export default {
         var user = {
           nickName:this.nickName,
           account: this.username,
-          password:this.crypto.createHash("md5").update(this.password),
+          password:md5(this.password),
           //avatar: `https://api.adorable.io/avatars/200/${this.username}.png`,
           email:this.email
         };
@@ -104,7 +105,7 @@ export default {
         var suce;
         var result;
 
-        this.$axios.post("/",user)
+        this.$axios.post("http://10.42.0.118:8080/register",user)
           .then(function (response) {
              if (response.data.success===true){
                  suce=true;result=response;

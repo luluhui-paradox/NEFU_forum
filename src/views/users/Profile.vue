@@ -44,7 +44,7 @@ export default {
 
     var user=this.$store.state.user;
     var result;
-    this.$axios.post("/queryUrl",user)
+    this.$axios.post("10.42.0.118:8080/user",user)
       .then(function (response) {
          if (response.status===200){this.user=response.data.user;result=true}
          else{result=false}
@@ -67,7 +67,7 @@ export default {
             changeUser={...stageUser,...changeUser};
 
             var success;
-            this.$axios.post("/queryUrl",changeUser)
+            this.$axios.post("10.42.0.118:8080/user",changeUser)
               .then(function (response) {
                   if(response.status===200)
                      success=true;result=response;

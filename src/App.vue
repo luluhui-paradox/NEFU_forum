@@ -8,10 +8,12 @@
   </div>
 </template>
 
+
 <script>
 import TheHeader from '@/components/layouts/TheHeader'
 import TheFooter from '@/components/layouts/TheFooter'
-import crypto from 'crypto'
+
+
 
 export default {
   name: 'App',
