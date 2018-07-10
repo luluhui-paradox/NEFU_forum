@@ -68,30 +68,26 @@ export default {
       console.log(user);
       //const localUser = this.$store.state.user
       //这里放axios异步请求
-      var sucs;//成功标识
-      var result;//存放回传结果
-      this.$axios.post('http://10.42.0.118:8080/authorize',user)
-        .then(function (response) {
-          if (response.result.success===true){
-             sucs=true;
-          } else{
-              sucs=false;
-          }
-        })
-        .catch(function (error) {
-              sucs=false;
-        });
+      this.$axios.post("http://10.42.0.118:8080/authorize",user)
+        .then(response=>{
+             if (response.data.success===true && response.status===200){
+                 this.$store.state.token=response.data.token;
+                 sessionStorage.setItem('token',response.data.token);
+                 console.log(sessionStorage.getItem('token'));
+                 this.$axios.get("http://10.42.0.118:8080/user")
+                   .then(response=>{
+                     if(response.status===200){
+                        this.$store.dispatch("login",response.data);
+                     }
+                   })
+                   .catch(error=>{this.showMsg("huo qu yong hu xinxi shibai")})
 
-      if (sucs){
-        //session中存放access_token
-        sessionStorage.setItem("token",result.data.token);
-        this.$axios.post("/url",{accout:user.account,password:user.password})
-          .then(function (response) {
-            this.$store.dispatch("login",response.data);
-          })
-        //登录操作
-      } else
-        this.showMsg("用户名或密码不对");
+             } else this.showMsg("登录失败");
+
+        }).catch(error=>{
+          this.showMsg("登录失败")
+      })
+
     },
 
     showMsg(msg, type = 'warning') {

@@ -17,7 +17,7 @@ import { mockArticles } from './mock/data'
 import ls from './utils/localStorage.js'
 import ss from './utils/sessionStorage.js'
 import './mock'
-import axios from 'axios'
+import axios from './untils/axiosConfig';
 Vue.prototype.$axios = axios
 
 Vue.use(ElementUI)

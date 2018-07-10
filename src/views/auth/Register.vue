@@ -50,6 +50,7 @@ import ls from '@/utils/localStorage'
 import sessionStorage from "../../utils/sessionStorage";
 import md5 from 'md5'
 
+
 export default {
   name: 'Register',
   data() {
@@ -95,39 +96,25 @@ export default {
         this.getCaptcha()
       } else {
         var user = {
-          nickName:this.nickName,
+          name:this.nickName,
           account: this.username,
           password:md5(this.password),
           //avatar: `https://api.adorable.io/avatars/200/${this.username}.png`,
           email:this.email
         };
         //向服务器返回数据
-        var suce;
-        var result;
-
         this.$axios.post("http://10.42.0.118:8080/register",user)
-          .then(function (response) {
-             if (response.data.success===true){
-                 suce=true;result=response;
-
-
-             }
-             else suce=false;
-          }).catch(function (error) {
-          suce=false;
-        });
-
-
-        if (suce){
-          sessionStorage.setItem("access_token",result.data.access_token);
-          this.login(result.data.user);
-        }
-        else {this.showMsg("注册失败");}
+          .then(response=>{
+            if(response.status===201){
+              this.login();
+            } else this.showMsg("注册失败");
+          })
+          .catch(error=>{this.showMsg("注册失败")})
       }
     },
     //注册成功，直接登录
-    login(user) {
-      this.$store.dispatch('login', user);
+    login() {
+      this.$router.push('/auth/login');
       this.showMsg('注册成功', 'success');
     },
     showMsg(msg, type = 'warning') {

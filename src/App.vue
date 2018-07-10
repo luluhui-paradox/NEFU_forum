@@ -10,9 +10,9 @@
 
 
 <script>
-import TheHeader from '@/components/layouts/TheHeader'
-import TheFooter from '@/components/layouts/TheFooter'
-
+import TheHeader from '@/components/layouts/TheHeader';
+import TheFooter from '@/components/layouts/TheFooter';
+import "./untils/axiosConfig";
 
 
 export default {

@@ -4,10 +4,11 @@ import axios from 'axios'
 import qs from 'qs'
 
 axios.interceptors.request.use(config => {    // 这里的config包含每次请求的内容
+  //config.headers.accept
   // 判断localStorage中是否存在api_token
   if (sessionStorage.getItem('token')) {
-    //  存在将api_token写入 request header
-    config.headers.token= `${sessionStorage.getItem('token')}`;
+    //  存在将api_token写入 request header,需要格式化字符串
+    config.headers.Authorization=JSON.parse(sessionStorage.getItem('token'));
   }
   return config;
 }, err => {
@@ -23,7 +24,7 @@ axios.interceptors.response.use(response => {
 function checkStatus (response) {
   // 如果http状态码正常，则直接返回数据
   if (response && (response.status === 200 || response.status === 304 ||
-    response.status === 400)) {
+    response.status === 400||response.status===201)) {
     return response
   }
   if (response.status===401){
@@ -47,3 +48,49 @@ function checkCode (res) {
   }
   return res
 }
+export default axios;
+
+// 请求方式的配置
+// export default {
+//   post (url, data) {  //  post
+//     return axios({
+//       method: 'post',
+//       baseURL: '/backapis',
+//       url,
+//       data: JSON.stringify(data),
+//       timeout: 5000,
+//       headers: {
+//         'X-Requested-With': 'XMLHttpRequest',
+//         'Content-Type': 'application/json; charset=UTF-8'
+//       }
+//     }).then(
+//       (response) => {
+//         return checkStatus(response)
+//       }
+//     ).then(
+//       (res) => {
+//         return checkCode(res)
+//       }
+//     )
+//   },
+//   get (url, params) {  // get
+//     return axios({
+//       method: 'get',
+//       baseURL: '/backapis',
+//       url,
+//       params, // get 请求时带的参数
+//       timeout: 5000,
+//       headers: {
+//         'X-Requested-With': 'XMLHttpRequest'
+//       }
+//     }).then(
+//       (response) => {
+//         return checkStatus(response)
+//       }
+//     ).then(
+//       (res) => {
+//         return checkCode(res)
+//       }
+//     )
+//   }
+// }
