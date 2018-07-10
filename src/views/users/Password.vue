@@ -47,23 +47,17 @@ export default {
         if (e.target.canSubmit) {
                     var stateUser=this.$store.state.user;
                     var changeUser={password:this.crypto.createHash('md5').update(this.password)};
-                    var suces;
                     changeUser={...stateUser,...changeUser};
                     //异步方法
                     this.$axios.post("10.42.0.118:8080/user",changeUser)
-                    .then(function (response) {
-                    if(response.data.success===true){
-                       suces=true;
-                    }
-                    else suces=false;
-             })
-                    .catch(function (error) {
-                   suces=false
-             });
-                    if (suces){
-              this.$store.dispatch('updateUser',changeUser);
-              this.$message.show('修改成功');
-           }else this.$message.show('修改失败');
+                      .then(response=>{
+                         if (response.status===200){
+                           this.$store.dispatch('updateUser',changeUser);
+                           this.$message.show('修改成功');
+                         }
+                         else this.$message.show('修改失败');
+                      })
+                      .catch(error=>{this.$message.show('修改失败')})
         }
       })
     }

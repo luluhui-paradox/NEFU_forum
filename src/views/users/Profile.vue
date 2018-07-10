@@ -13,7 +13,7 @@
           </div>
           <div class="form-group">
            <!--修改邮箱-->
-            <label class="col-sm-2 control-label">昵称</label>
+            <label class="col-sm-2 control-label">邮箱</label>
             <div class="col-sm-6">
               <input v-model.trim="email" v-validator:input.required="{ title: '邮箱', error: '昵称不能为空' }"  type="email" class="form-control">
             </div>
@@ -36,23 +36,11 @@ export default {
   name: 'EditProfile',
   data() {
     return {
-      nickName:this.$store.state.user.nickName,//昵称
+      nickName:this.$store.state.user.name,//昵称
       email:this.$store.state.user.email//邮箱
     }
   },
-  created() {
-
-    var user=this.$store.state.user;
-    var result;
-    this.$axios.post("10.42.0.118:8080/user",user)
-      .then(function (response) {
-         if (response.status===200){this.user=response.data.user;result=true}
-         else{result=false}
-      })
-      .catch(function (error) {
-           result=false;
-      })
-     if(result) {this.$store.state.user=user;sessionStorage.setItem("user",user)}
+    beforeCreate() {
 
   },
   methods: {
@@ -65,21 +53,16 @@ export default {
               email:this.email
             };
             changeUser={...stageUser,...changeUser};
-
-            var success;
-            this.$axios.post("10.42.0.118:8080/user",changeUser)
-              .then(function (response) {
-                  if(response.status===200)
-                     success=true;result=response;
-              })
-              .catch(function (error) {
-                   success=false;
-              })
-          if (success) {
-            this.$store.dispatch('updateUser',changeUser);
-            this.showMsg("修改成功");
-          }
-          else this.showMsg("修改失败");
+             this.$axios.post('/',changeUser)
+               .then(response=>{
+                   if (response.status===200)
+                   {
+                      this.$store.dispatch('updateUser',changeUser);
+                      this.showMsg("修改成功");
+                   }
+                   else this.showMsg("修改失败");
+               })
+               .catch(error=>{this.showMsg("修改失败")})
         }
       })
     }
