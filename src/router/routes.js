@@ -80,4 +80,23 @@ export default [
       }
     ]
   },
+  //分论坛模块
+  {
+    path:'/forumIndex',
+    name:'forumIndex',
+    component:()=>import('@/view/forum/forumIndex.vue'),
+    children:[
+      {
+        path: '/edit/:forumId',
+        name: 'forumEdit',
+        component: () => import('@/views/forum/edit.vue')
+      },
+      {
+        path: '/add',
+        name: 'forumAdd',
+        component: () => import('@/views/forum/add.vue')
+      },
+    ]
+  },
+
 ]

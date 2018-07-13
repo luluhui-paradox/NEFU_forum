@@ -29,6 +29,12 @@
               <!--个人专栏-->
             <!--</router-link>-->
           <!--</li>-->
+          <li v-if="user">
+            <router-link :to="`/forum/index`">
+              <i class="fa fa-list-ul text-md i-middle">论坛管理</i>
+          <!--论坛管理-->
+          </router-link>
+          </li>
           <li>
             <router-link to="/users/1/edit">
               <i class="fa fa-cog text-md i-middle"></i>
